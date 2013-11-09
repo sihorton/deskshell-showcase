@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<title>html5 notifications</title>
+	</head>
+	<body>
+	<img src="deskShellLogo.jpg"/><br/>
+	<hr/>
+	<h3>HTML5 Notifications</h3>
+	<p>See <a href="https://developer.mozilla.org/en-US/docs/Web/API/notification">https://developer.mozilla.org/en-US/docs/Web/API/notification</a> for
+	details about this api. Below is a demo of it in action</p>
+	<p>
+	Message:<input type="text" id="message" value="Hi There!"/>
+		<button onclick='
+		// Lets check if the browser supports notifications
+  if (!("Notification" in window)) {
+    alert("This browser does not support desktop notification");
+  }
+
+  // Lets check if the user is okay to get some notification
+  else if (Notification.permission === "granted") {
+    // If its okay lets create a notification
+    var notification = new Notification(document.getElementById("message").value);
+  }
+
+  // Otherwise, we need to ask the user for permission
+  // Note, Chrome does not implement the permission static property
+  // So we have to check for NOT "denied" instead of "default"
+  else if (Notification.permission !== "denied") {
+    Notification.requestPermission(function (permission) {
+
+      // Whatever the user answers, we make sure Chrome stores the information
+      if(!("permission" in Notification)) {
+        Notification.permission = permission;
+      }
+
+      // If the user is okay, lets create a notification
+      if (permission === "granted") {
+        var notification = new Notification(document.getElementById("message").value);
+      }
+    });
+  }
+
+  // At last, if the user already denied any notification, and you 
+  // want to be respectful there is no need to bother him any more.
+		
+		'>Notify me!</button>
+		</p>
+		
+	</body>
+</html>

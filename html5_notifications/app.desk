@@ -1,0 +1,13 @@
+{
+    "name": "html5_notifications",
+    "version": "0.1",
+    "author": "sihorton",
+    "description": "A demo of using html5 notifications",
+    "licence": "MIT",
+    "htdocs": "htdocs",
+    "frontend": "chromium-portable",
+    "backend": "none",
+    "width": "300",
+    "height": "300",
+    "defaultLocation": "index.htm"
+}

@@ -1,3 +1,9 @@
+This is the chrome apps sample "Frameless window". I have added a bat file "launchTest.bat" to show how chrome apps could be 
+launched from deskshell. Please updated the bat script to have the full path to the chrome executable. If you run the
+bat file you will see a new browser window opened, and then the frameless app. This is a bug: http://crbug.com/175381
+Once this bug is fixed we will be able to launch chrome apps from deskshell!
+
+
 <a target="_blank" href="https://chrome.google.com/webstore/detail/hjjdaddngnaofnfjpajdcbdmkegiakec">![Try it now in CWS](https://raw.github.com/GoogleChrome/chrome-app-samples/master/tryitnowbutton.png "Click here to install this sample from the Chrome Web Store")</a>
 
 

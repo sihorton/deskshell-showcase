@@ -7,7 +7,7 @@ var running = deskShell.startApp({})
 		console.log("connected to client");
 		socket.on('filePicker',function(params,back) {
 			console.log("file picker called",params);
-			winfunc.filePicker({},function(file) {
+			winfunc.filePicker(params ||{},function(file) {
 				console.log("file picker returned",file);
 				back({file:file});
 			});

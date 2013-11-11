@@ -9,14 +9,24 @@
 	<hr/>
 	<h3>Windows Functions</h3>
 	<p>This demo shows native windows functions being called.</p>
+	<hr/>
+	<h4>Native File Picker</h4>
+	Filter:<input id="Filter" type="text" value="*.txt"/><br/>
+	Initial Folder:<input id="Folder" type="text" value=""/><br/>
+	Open or Save:<input id="OpenSave" type="text" value="open"/><br/>
+	
+	
 	<button onclick="
 		deskShell.sendMessage('filePicker',{
+			filter:document.getElementById('Filter').value
+			,folder:document.getElementById('Folder').value
+			,opensave:document.getElementById('OpenSave').value
 		},function(result) {
 			if (result.file) {
 				alert('You picked:'+result.file);
 			}
 		});
-	">Native File Picker (Open)</button>
+	">Native File Picker</button>
 	<p></p>	
 	</body>
 </html>

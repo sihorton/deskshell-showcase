@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<title>win-func-demo</title>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/deskShell/clientApi.js"></script>
+	</head>
+	<body>
+	<img src="deskShellLogo.jpg"/><br/>
+	<hr/>
+	<h3>Windows Functions</h3>
+	<p>This demo shows native windows functions being called.</p>
+	<button onclick="
+		deskShell.sendMessage('filePicker',{
+		},function(result) {
+			if (result.file) {
+				alert('You picked:'+result.file);
+			}
+		});
+	">Native File Picker (Open)</button>
+	<p></p>	
+	</body>
+</html>

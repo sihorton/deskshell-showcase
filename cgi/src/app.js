@@ -3,7 +3,7 @@ var path = require("path"),
 	
 var running = deskShell.startApp({
 	requestHandler:function(req, res) {
-		reqdata = require("url").parse(req.url);
+		reqdata = require("url").parse(req.url,true);
 		switch(path.extname(reqdata.pathname)) {
 			case ".php":
 				params = {
@@ -34,11 +34,11 @@ var running = deskShell.startApp({
 				
 				//set environment variables for this request
 				reqEnv['SCRIPT_NAME'] = url;
-				reqEnv['PATH_INFO'] = '';//not supported a the moment.
-				reqEnv['PATH_TRANSLATED'] = reqEnv['DOCUMENT_ROOT']+url;
+				reqEnv['PATH_INFO'] = path.normalize(reqEnv['DOCUMENT_ROOT']+url);
+				reqEnv['PATH_TRANSLATED'] = path.normalize(reqEnv['DOCUMENT_ROOT']+url);
 				reqEnv['QUERY_STRING'] = '';
-				for(var p in req.params) {
-					reqEnv['QUERY_STRING'] += p+"="+encodeURIComponent(req.params[p])+"&";
+				for(var p in reqdata.query) {
+					reqEnv['QUERY_STRING'] += p+"="+encodeURIComponent(reqdata.query[p])+"&";
 				}
 				reqEnv['REQUEST_METHOD'] = req.method;
 				
@@ -49,6 +49,9 @@ var running = deskShell.startApp({
 				//copy in additional special headers..
 				if ('content-length' in req.headers) {
 					reqEnv['CONTENT_LENGTH'] = req.headers['content-length'];
+				} else {
+					//not sure if this is a good idea...
+					res.setHeader('Transfer-Encoding', 'chunked');
 				}
 				if ('content-type' in req.headers) {
 					reqEnv['CONTENT_TYPE'] = req.headers['content-type'];
@@ -62,7 +65,7 @@ var running = deskShell.startApp({
 				if (params.debug) {
 					console.log("request:"+url);
 				}
-				//response.setHeader('Transfer-Encoding', 'chunked');
+				
 				var cgi = spawn(params.bin, [], {
 				  'env': reqEnv
 				});

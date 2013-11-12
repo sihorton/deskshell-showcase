@@ -12,5 +12,12 @@ var running = deskShell.startApp({})
 				back({file:file});
 			});
 		});
+		socket.on('folderPicker',function(params,back) {
+			console.log("folder picker called",params);
+			winfunc.folderPicker(params ||{},function(folder) {
+				console.log("folder picker returned",folder);
+				back({folder:folder});
+			});
+		});
 	});
 });

@@ -4,12 +4,11 @@ var path = require("path"),
 var running = deskShell.startApp({
 	requestHandler:function(req, res) {
 		reqdata = require("url").parse(req.url);
-		console.log(path.extname(reqdata.pathname));
 		switch(path.extname(reqdata.pathname)) {
 			case ".php":
 				params = {
 					bin:__dirname+path.sep+deskShell.appDef.cgiHandlers['.php']
-					,debug:true
+					,debug:false
 				};
 				params.env = {
 					//these should not be removed, but customise and add any parameters you want. 
@@ -17,8 +16,9 @@ var running = deskShell.startApp({
 					,'SERVER_PROTOCOL':"HTTP/1.1"
 					,'GATEWAY_INTERFACE':"CGI/1.1"
 					,'SERVER_NAME':"deskshell.org"
-					,'SERVER_PORT':80
+					,'SERVER_PORT':deskShell
 					,'DOCUMENT_ROOT':__dirname+path.sep+'htdocs'+path.sep
+					,'REDIRECT_STATUS_ENV':0
 				}
 				var reqEnv = {};
 				/*for(var keys = Object.keys(process.env), l = keys.length; l; --l) {
@@ -63,8 +63,6 @@ var running = deskShell.startApp({
 					console.log("request:"+url);
 				}
 				//response.setHeader('Transfer-Encoding', 'chunked');
-				console.log(reqEnv);
-				console.log("running",params.bin);
 				var cgi = spawn(params.bin, [], {
 				  'env': reqEnv
 				});
@@ -78,9 +76,7 @@ var running = deskShell.startApp({
 					});
 				}	
 				var headersSent = false;
-				var allData = "";
 				cgi.stdout.on('data',function(data) {
-					console.log(data.toString());
 					if (headersSent) {
 						//stream data to browser as soon as it is available.
 						//console.log(data.toString());
@@ -93,9 +89,7 @@ var running = deskShell.startApp({
 							if (lines[l] == "") {
 								res.writeHead(200);
 								headersSent = true;
-								//Seems like AppJS response does not support streaming.
-								//response.write(lines.slice(l+1).join('\n'));
-								allData += lines.slice(l+1).join('\r\n');
+								res.write(lines.slice(l+1).join('\r\n'));
 								break;
 							} else {
 								//set header
@@ -107,8 +101,7 @@ var running = deskShell.startApp({
 					
 				});
 				cgi.stdout.on('end',function() {
-					console.log("cgi end");
-					res.end(allData);
+					res.end();
 				});
 				return false;
 			break;

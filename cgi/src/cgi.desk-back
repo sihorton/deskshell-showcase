@@ -1,0 +1,19 @@
+{
+    "name": "cgi",
+    "author": "sihorton",
+    "description": "Deskshell cgi demo",
+    "licence": "MIT",
+    "width": "400",
+    "height": "600",
+    "frontend": "chromium",
+    "backend": "node",
+    "htdocs": "htdocs",
+    "defaultLocation": "index.htm",
+    "main": "app.js",
+    "version": "0.1",
+    "v": "0.1",
+    "exitOnAppWinClose": true
+	,"cgiHandlers":{
+		".php":"bin/php/php5.4.16/php-cgi.exe"
+	}
+}

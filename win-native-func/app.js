@@ -1,4 +1,5 @@
-winfunc = require("deskshell-win-func");
+var winfunc = require("deskshell-win-func");
+var fs = require("fs");
 
 var running = deskShell.startApp({})
 .then(function(app) {
@@ -17,6 +18,13 @@ var running = deskShell.startApp({})
 			winfunc.folderPicker(params ||{},function(folder) {
 				console.log("folder picker returned",folder);
 				back({folder:folder});
+			});
+		});
+		socket.on('readFile',function(params,callback) {
+			console.log("readFile",params);
+			fs.readFile(params.file, function (err, data) {
+				 if (err) throw err;
+				 if (callback) callback(data.toString());
 			});
 		});
 	});

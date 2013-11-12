@@ -26,7 +26,25 @@
 				alert('You picked:'+result.file);
 			}
 		});
-	">Native File Picker</button><br/>
+	">Native File Picker</button>
+	
+	<button onclick="
+		deskShell.sendMessage('filePicker',{
+			filter:document.getElementById('Filter').value
+			,folder:document.getElementById('Folder').value
+			,opensave:document.getElementById('OpenSave').value
+		},function(result) {
+			if (result.file) {
+				alert('You picked:'+result.file);
+				window.deskShell.sendMessage('readFile',{
+                    file:result.file
+                },function(contents) {
+                   alert(contents);
+                });
+			}
+		});
+	">Alert File Contents</button>
+	<br/>
 	<hr/>
 	<h4>Native Folder Dialog</h4>
 	Title:<input id="Title2" type="text" value="Select a folder"/><br/>

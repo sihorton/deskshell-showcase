@@ -15,8 +15,7 @@
     "exitOnAppWinClose": true
 	,"cgi": {
 		"sjs": {
-			"folder":"sjs"
-			,"cache":false
+			"cache":false
 		}
 	}
 }

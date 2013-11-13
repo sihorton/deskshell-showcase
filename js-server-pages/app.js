@@ -12,9 +12,9 @@ var running = deskShell.startApp({
 				} else {
 					var serveFile = '';
 					if (deskShell.packageFile) {
-						serveFile = deskShell.appDef.cgi.sjs.folder +path.sep+ reqfile;
+						serveFile = deskShell.appDef.htdocs +path.sep+ reqfile;
 					} else {
-						serveFile = __dirname +path.sep+ deskShell.appDef.cgi.sjs.folder +path.sep+ reqfile;
+						serveFile = __dirname +path.sep+ deskShell.appDef.htdocs +path.sep+ reqfile;
 					} 
 					console.log("serve sjs",serveFile);
 					var reader = deskShell.appfs.readFile(serveFile,'utf8',function(err,contents) {
